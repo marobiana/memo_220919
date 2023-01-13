@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class EncryptUtils {
+	
 	public static String md5(String message) {
 		String encData = "";
 		try {

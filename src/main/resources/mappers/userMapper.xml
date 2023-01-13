@@ -11,4 +11,25 @@
 		WHERE
 			`loginId` = #{loginId}
 	</select>
+	
+	<insert id="insertUser" parameterType="map">
+		INSERT INTO `user`
+		(
+			`loginId`
+			,`password`
+			,`name`
+			,`email`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{loginId}
+			, #{password}
+			, #{name}
+			, #{email}
+			, NOW()
+			, NOW()
+		)
+	</insert>
 </mapper>
