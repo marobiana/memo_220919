@@ -69,18 +69,13 @@
 				
 				// response
 				, success:function(data) {
-					if (data.code == 1) {
-						// 성공
-						if (data.result) {
-							// 중복
-							$('#idCheckDuplicated').removeClass('d-none');
-						} else {
-							// 사용 가능
-							$('#idCheckOk').removeClass('d-none');
-						}
+					// 성공
+					if (data.result) {
+						// 중복
+						$('#idCheckDuplicated').removeClass('d-none');
 					} else {
-						// 실패
-						alert(data.errorMessage);
+						// 사용 가능
+						$('#idCheckOk').removeClass('d-none');
 					}
 				}
 				, error:function(e) {
