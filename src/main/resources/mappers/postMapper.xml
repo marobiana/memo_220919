@@ -53,7 +53,23 @@
 			]]>
 		ORDER BY `id` DESC
 		</if>
+		<if test="direction == 'prev'">
+			<![CDATA[
+			AND `id` >  #{standardId}
+			]]>
+		</if>
 		LIMIT ${limit}
+	</select>
+	
+	<select id="selectPostIdByUserIdSort" parameterType="map" resultType="int">
+		SELECT
+			`id`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+		ORDER BY `id` ${sort}
+		LIMIT 1
 	</select>
 	
 	<select id="selectPostByPostIdUserId" parameterType="map" resultType="com.memo.post.model.Post">

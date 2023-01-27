@@ -1,5 +1,6 @@
 package com.memo.post.bo;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -100,16 +101,27 @@ public class PostBO {
 			direction = "prev";
 			standardId = prevId;
 			
-//			List<Post> postList = postDAO.selectPostListByUserId(userId, direction, standardId, POST_MAX_SIZE);
-//			
-//			return 
+			List<Post> postList = postDAO.selectPostListByUserId(userId, direction, standardId, POST_MAX_SIZE);
+			Collections.reverse(postList);
+			return postList;
 		} else if (nextId != null) { // 다음
 			direction = "next";
 			standardId = nextId;
 		}
 		
 		// 첫페이지일 때(페이징X) standardId, direction이 null
+		// 다음일 때 standarId, direction 채워져서 넘어감
 		return postDAO.selectPostListByUserId(userId, direction, standardId, POST_MAX_SIZE);
+	}
+	
+	public boolean isPrevLastPage(int prevId, int userId) {
+		int maxPostId = postDAO.selectPostIdByUserIdSort(userId, "DESC");
+		return maxPostId == prevId ? true : false;
+	}
+	
+	public boolean isNextLastPage(int nextId, int userId) {
+		int minPostId = postDAO.selectPostIdByUserIdSort(userId, "ASC");
+		return minPostId == nextId ? true : false;
 	}
 	
 	public Post getPostByPostIdUserId(int postId, int userId) {
