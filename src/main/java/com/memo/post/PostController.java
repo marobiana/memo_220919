@@ -23,13 +23,26 @@ public class PostController {
 	
 	// 글 목록 화면
 	@GetMapping("/post_list_view")
-	public String postListView(Model model, HttpSession session) {
+	public String postListView(
+			@RequestParam(value="prevId", required=false) Integer prevIdParam,
+			@RequestParam(value="nextId", required=false) Integer nextIdParam,
+			Model model, HttpSession session) {
+		
 		Integer userId = (Integer)session.getAttribute("userId");
 		if (userId == null) {
 			return "redirect:/user/sign_in_view";
 		}
 		
-		List<Post> postList = postBO.getPostListByUserId(userId);
+		int prevId = 0;
+		int nextId = 0;
+		List<Post> postList = postBO.getPostListByUserId(userId, prevIdParam, nextIdParam);
+		if (postList.isEmpty() == false) { // postList가 비었을 때 에러 방지
+			prevId = postList.get(0).getId();
+			nextId = postList.get(postList.size() - 1).getId();
+		}
+		
+		model.addAttribute("prevId", prevId); // 가져온 리스트 중 가장 앞쪽(큰 id)
+		model.addAttribute("nextId", nextId); // 가져온 리스트 중 가장 뒤쪽(작은 id)
 		model.addAttribute("postList", postList);
 		model.addAttribute("viewName", "post/postList");
 		return "template/layout";

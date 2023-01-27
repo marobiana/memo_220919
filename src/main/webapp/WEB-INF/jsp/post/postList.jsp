@@ -27,6 +27,12 @@
 			</tbody>
 		</table>
 		
+		<%-- 페이징 --%>
+		<div class="d-flex justify-content-center">
+			<a href="/post/post_list_view?prevId=${prevId}" class="mr-5">&lt;&lt;이전</a>
+			<a href="/post/post_list_view?nextId=${nextId}">다음&gt;&gt;</a>
+		</div>
+		
 		<div class="d-flex justify-content-end">
 			<a href="/post/post_create_view" class="btn btn-info">글쓰기</a>
 		</div>

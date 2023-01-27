@@ -44,7 +44,16 @@
 			`post`
 		WHERE
 			`userId` = #{userId}
+		<if test="direction == null">
 		ORDER BY `id` DESC
+		</if>
+		<if test="direction == 'next'">
+			<![CDATA[
+			AND `id` <  #{standardId}
+			]]>
+		ORDER BY `id` DESC
+		</if>
+		LIMIT ${limit}
 	</select>
 	
 	<select id="selectPostByPostIdUserId" parameterType="map" resultType="com.memo.post.model.Post">
